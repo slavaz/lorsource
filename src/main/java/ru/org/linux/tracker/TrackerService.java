@@ -33,8 +33,12 @@ import java.util.List;
 @Service
 public class TrackerService {
 
+  private final TrackerDao trackerDao;
+
   @Autowired
-  private TrackerDao trackerDao;
+  public TrackerService(TrackerDao trackerDao) {
+    this.trackerDao = trackerDao;
+  }
 
   public List<TrackerItem> get(Template template, Integer offset, TrackerFilterEnum trackerFilter) throws UserErrorException {
     int messages = template.getProf().getMessages();
@@ -44,6 +48,9 @@ public class TrackerService {
     Calendar calendar = Calendar.getInstance();
     calendar.setTime(new Date());
     if (trackerFilter == TrackerFilterEnum.MINE) {
+      if (!template.isSessionAuthorized()) {
+        throw new UserErrorException("Not authorized");
+      }
       calendar.add(Calendar.MONTH, -6);
     } else {
       calendar.add(Calendar.HOUR, -24);
@@ -51,11 +58,6 @@ public class TrackerService {
     Timestamp dateLimit = new Timestamp(calendar.getTimeInMillis());
 
     User user = template.getCurrentUser();
-    if (trackerFilter == TrackerFilterEnum.MINE) {
-      if (!template.isSessionAuthorized()) {
-        throw new UserErrorException("Not authorized");
-      }
-    }
     return trackerDao.getTrackAll(trackerFilter, user, dateLimit, topics, offset, messages);
   }
 }

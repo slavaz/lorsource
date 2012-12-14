@@ -101,6 +101,7 @@ public class TrackerRestController {
           Pageable pageable,
           HttpServletRequest request
   ) throws UserErrorException {
+
     TrackerFilterEnum trackerFilter = Enums.getIfPresent(TrackerFilterEnum.class, filterName).or(TrackerFilterEnum.ALL);
     Template template = Template.getTemplate(request);
 

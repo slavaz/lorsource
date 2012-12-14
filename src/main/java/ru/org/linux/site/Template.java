@@ -15,35 +15,24 @@
 
 package ru.org.linux.site;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
-import org.springframework.web.servlet.support.RequestContextUtils;
 import ru.org.linux.auth.AccessViolationException;
 import ru.org.linux.auth.AuthUtil;
-import ru.org.linux.csrf.CSRFProtectionService;
 import ru.org.linux.spring.Configuration;
 import ru.org.linux.storage.FileStorage;
 import ru.org.linux.storage.Storage;
 import ru.org.linux.storage.StorageException;
-import ru.org.linux.storage.StorageNotFoundException;
 import ru.org.linux.user.*;
-import ru.org.linux.util.LorHttpUtils;
 import ru.org.linux.util.StringUtil;
 
 import javax.annotation.Nullable;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Properties;
 
-public final class Template {
+public class Template {
 
   private final Profile userProfile;
   private final Configuration configuration;
